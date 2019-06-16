@@ -65,7 +65,7 @@ class PruebasIndependientes {
 		res = prueba.toArray(new Integer[1][1]);
 
 	}
-	@Test
+	@Ignore
 	void pruebaObternerTurno() {
 		Medico medico= new Medico("1", "pepito", "mas", "642", Especialidades.AtencionPrimaria);
 		GestionHorario gestionConsultas=new GestionHorario();
@@ -75,7 +75,7 @@ class PruebasIndependientes {
 		assertTrue(gestionConsultas.getConsultasPrimaria()[0]==1);
 		
 	}
-	@Test
+	@Ignore
 	void getDatos() {
 		ArrayList<Cita> lista=new ArrayList<Cita>();
 		Date date=new Date(1992,2,10);
@@ -108,8 +108,10 @@ class PruebasIndependientes {
 		horario.seleccionarDia(0, 0);
 		assertTrue(horario.getHorarioSemanal()[0][0]==1);
 		horario.seleccionarDia(0, 0);
+		System.out.println(horario.getFechaCita());
 		horario.reservarDias();
 		assertTrue(horario.getHorarioSemanal()[0][0]==3);
 		assertTrue(horario.getHorarioSemanal()[0][1]!=3);
+		System.out.println((LocalDate.now().getDayOfMonth()));
 	}
 }

@@ -2,22 +2,22 @@ package panelComunes;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Modelo.Especialidades;
-import Modelo.Medico;
 import Modelo.MedicoActivo;
 import control.GestionHorario;
 
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
 public class MAIN extends JFrame {
 
+	private ArrayList<MedicoActivo> listaMedicos=new ArrayList<>();
 	private JPanel contentPane;
 //	Seleccion select=new Seleccion();
 //	Identificacion identi = new Identificacion();
@@ -55,8 +55,11 @@ public class MAIN extends JFrame {
 		MedicoActivo medico2= new MedicoActivo("1", "pepito", "mas", "642", Especialidades.AtencionPrimaria);
 		gestionHorario.ocuparConsultaPrimaria(1, medico);
 		gestionHorario.ocuparConsultaEspecialista(0, medico2);
-		citaIssam.getCmbMedico().addItem(medico);
-		citaIssam.getCmbMedico().addItem(medico2);
+		citaIssam.getCmbMedico().addItem("papito");
+		citaIssam.getCmbMedico().addItem("pepito");
+		MedicoActivo copia=medico;
+		System.out.println(copia.getNombre());
+		System.out.println(medico.getNombre());
 		JButton btnAplicar = new JButton("Aplicar");
 		btnAplicar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
