@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -12,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Modelo.Especialidades;
+import Modelo.Medico;
 import Modelo.MedicoActivo;
 import control.GestionHorario;
 
@@ -23,6 +25,7 @@ public class MAIN extends JFrame {
 //	Identificacion identi = new Identificacion();
 	VistaCitaIssam citaIssam=new VistaCitaIssam();
 	GestionHorario gestionHorario=new GestionHorario();
+	MedicoActivo medicoMio=null;
 	/**
 	 * Launch the application.
 	 */
@@ -51,28 +54,34 @@ public class MAIN extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		contentPane.add(citaIssam);
 		setContentPane(contentPane);
-		MedicoActivo medico= new MedicoActivo("1", "pepito", "mas", "642", Especialidades.AtencionPrimaria);
-		MedicoActivo medico2= new MedicoActivo("1", "pepito", "mas", "642", Especialidades.AtencionPrimaria);
+		MedicoActivo medico= new MedicoActivo("1", "papito", "mas", "642", Especialidades.AtencionPrimaria);
+		MedicoActivo medico2= new MedicoActivo("1", "loTengoTodoPapi", "mas", "642", Especialidades.AtencionPrimaria);
+		listaMedicos.add(medico);
+		listaMedicos.add(medico2);
 		gestionHorario.ocuparConsultaPrimaria(1, medico);
 		gestionHorario.ocuparConsultaEspecialista(0, medico2);
 		citaIssam.getCmbMedico().addItem("papito");
-		citaIssam.getCmbMedico().addItem("pepito");
+		citaIssam.getCmbMedico().addItem("loTengoTodoPapi");
 		MedicoActivo copia=medico;
 		System.out.println(copia.getNombre());
 		System.out.println(medico.getNombre());
 		JButton btnAplicar = new JButton("Aplicar");
 		btnAplicar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				MedicoActivo medicoMio=(MedicoActivo) citaIssam.getCmbMedico().getSelectedItem();
+				for (Iterator iterator = listaMedicos.iterator(); iterator.hasNext();) {
+					MedicoActivo medicoActivo = (MedicoActivo) iterator.next();
+					if(medicoActivo.getNombre().equals(citaIssam.getCmbMedico().getSelectedItem().toString())) {
+				System.out.println("el medico selecciondo es: "+medicoActivo.getNombre());
 				limpiarBotonera();
-				int []dias=new int[medicoMio.getHorarioConsulta().getDiaTrabajo().length];
-				for (int i = 0; i < dias.length; i++) {
-					dias[i]=medicoMio.getHorarioConsulta().getDiaTrabajo()[i].getValor()-1;
+				System.out.println(medicoActivo.getDireccion());
+				medicoActivo.setDireccion("hola wuanjo");
+				citaIssam.asignarLabels( medicoActivo.getHorarioConsulta().getHoraTrabajo());
+//				System.out.println(medicoMio.getHorarioConsulta().getDia());
+//				System.out.println(medicoMio.getHorarioConsulta().getFechaCita());
+				medicoActivo.getHorarioConsulta().reservarDias();
+				citaIssam.asignarHorario(medicoActivo.getHorarioConsulta().getHorarioSemanal());
+				}}
 				}
-				citaIssam.asignarLabels(dias, medicoMio.getHorarioConsulta().getHoraTrabajo());
-				medicoMio.getHorarioConsulta().reservarDias();
-				citaIssam.asignarHorario(medicoMio.getHorarioConsulta().getHorarioSemanal());
-			}
 		});
 		for (int i = 0; i < citaIssam.botonera.length; i++) {
 			for (int j = 0; j < citaIssam.botonera[i].length; j++) {
@@ -80,13 +89,19 @@ public class MAIN extends JFrame {
 
 					@Override
 					public void actionPerformed(ActionEvent e) {
+						for (Iterator iterator = listaMedicos.iterator(); iterator.hasNext();) {
+							MedicoActivo medicoActivo = (MedicoActivo) iterator.next();
+							if(medicoActivo.getNombre().equals(citaIssam.getCmbMedico().getSelectedItem().toString())) {
 						JButton boton = (JButton) e.getSource();
-						MedicoActivo medicoMio=(MedicoActivo) citaIssam.getCmbMedico().getSelectedItem();
+						System.out.println(medicoActivo.getDireccion());
+						medicoActivo.setDireccion("hola bb");
 						int hora = Integer.valueOf(Character.toString(boton.getName().charAt(0)));
 						int dia = Integer.valueOf(Character.toString(boton.getName().charAt(1)));
-						medicoMio.getHorarioConsulta().seleccionarDia(hora, dia);
-						citaIssam.asignarHorario(medicoMio.getHorarioConsulta().getHorarioSemanal());
+						medicoActivo.getHorarioConsulta().seleccionarDia(hora, dia);
+						citaIssam.asignarHorario(medicoActivo.getHorarioConsulta().getHorarioSemanal());
 					System.out.println(hora + " " + dia);
+							}
+						}
 					}
 				});
 			}
@@ -100,6 +115,16 @@ public class MAIN extends JFrame {
 				citaIssam.botonera[i][j].setBackground(new JButton().getBackground());
 			}
 	}
+	}
+	public MedicoActivo getMedico() {
+		MedicoActivo retorno=null;
+		for (Iterator iterator = listaMedicos.iterator(); iterator.hasNext();) {
+			MedicoActivo medicoActivo = (MedicoActivo) iterator.next();
+			if(medicoActivo.getNombre().equals(citaIssam.getCmbMedico().getSelectedItem())) {
+				retorno=medicoActivo;
+			}
+		}
+		return retorno;
 	}
 
 }

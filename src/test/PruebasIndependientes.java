@@ -95,7 +95,7 @@ class PruebasIndependientes {
 		assertArrayEquals(retornoEsperado, retorno);
 		assertArrayEquals(retornoMatrizEsperado, camposMatriz);
 	}
-	@Test
+	@Ignore
 	void Horario() {
 		DiasDeLaSemana[] diaTrabajo = { DiasDeLaSemana.Monday, DiasDeLaSemana.Tuesday, DiasDeLaSemana.Wednesday,
 				DiasDeLaSemana.ThursDay, DiasDeLaSemana.Friday };
@@ -113,5 +113,17 @@ class PruebasIndependientes {
 		assertTrue(horario.getHorarioSemanal()[0][0]==3);
 		assertTrue(horario.getHorarioSemanal()[0][1]!=3);
 		System.out.println((LocalDate.now().getDayOfMonth()));
+	}
+	@Test
+	void testMio() {
+		Medico medico= new Medico("1", "Papaito", "mas", "642", Especialidades.AtencionPrimaria);
+		ArrayList<Medico> prueba=new ArrayList<Medico>();
+		prueba.add(medico);
+		Medico dos=medico;
+		dos.setNombre("Gilipollas");
+		prueba.add(dos);
+		prueba.remove(medico);
+		System.out.println(prueba.size());
+		
 	}
 }

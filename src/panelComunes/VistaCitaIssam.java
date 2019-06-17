@@ -116,12 +116,9 @@ public class VistaCitaIssam extends JPanel {
 		GestionCitas gestionCitas=new GestionCitas();
 		this.setLayout(gl_contentPane);
 	}
-	public void asignarLabels(int dias[],LocalTime horas[]) {
+	public void asignarLabels(LocalTime horas[]) {
 		for (int i = 0; i < horas.length; i++) {
 			this.horas.get(i).setText(horas[i].toString());
-		}
-		for (int i = 0; i < dias.length; i++) {
-			this.dias.get(i).setVisible(true);
 		}
 	}
 	public void asignarHorario(int[][] matriz) {

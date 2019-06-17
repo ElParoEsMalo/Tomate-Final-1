@@ -33,7 +33,7 @@ public class Horario implements Serializable {
 					dias = diasSemana[i].getValor() - ((LocalDate.now().getDayOfMonth() + 5) % 7);
 					hora = horaTrabajo[i];
 					dia = LocalDateTime.of(LocalDate.now().getYear(), LocalDate.now().getMonth(),
-							LocalDate.now().getDayOfMonth() + dias, hora.getHour(), hora.getMinute());
+							(LocalDate.now().getDayOfMonth()+j-LocalDate.now().getDayOfWeek().getValue()), hora.getHour(), hora.getMinute());
 				}
 			}
 		}
@@ -87,7 +87,7 @@ public class Horario implements Serializable {
 		for (int i = 0; i < horarioSemanal.length; i++) {
 			for (int j = 0; j < horarioSemanal.length; j++) {
 				if (horarioSemanal[i][j] == 2) {
-					retorno = diasSemana[i];
+					retorno = diasSemana[j];
 				}
 			}
 		}
